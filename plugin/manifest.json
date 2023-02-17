@@ -1,0 +1,28 @@
+{
+  "manifest_version": 1,
+  "version": 1,
+  "type": "APP",
+  "desktop": {
+    "js": ["js/desktop.js"],
+    "css": ["css/desktop.css"]
+  },
+  "icon": "image/メールボックスアイコン2.png",
+  "config": {
+    "html": "html/config.html",
+    "js": ["js/config.js"],
+    "css": ["css/51-modern-default.css", "css/config.css"],
+    "required_params": []
+  },
+  "name": {
+    "en": "posnumber2",
+    "ja": "郵便番号プラグイン 2.0"
+  },
+  "description": {
+    "en": "posnumber2",
+    "ja": "郵便番号を取得して、対応した結果を返すプラグイン"
+  },
+  "mobile": {
+    "js": ["js/mobile.js"],
+    "css": ["css/mobile.css"]
+  }
+}
