@@ -6,9 +6,9 @@ export const PropsDropDown = () => {
   const [value, setValue] = useState('')
   return (
     <>
-      <InputLabel id='drop-down-label'>入力項目</InputLabel>
+      <InputLabel id='propr-dropdown-label'>入力項目</InputLabel>
       <Select
-        labelId='drop-down-label'
+        labelId='propr-dropdown-label'
         id='props-key-dropdown'
         value={value}
         label='入力項目'

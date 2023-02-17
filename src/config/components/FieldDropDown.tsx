@@ -13,7 +13,6 @@ export const FieldDropDown = () => {
       const fields = await getFields(appId)
 
       const singleLineFields = fields.filter((field: { type: string }) => field.type === 'SINGLE_LINE_TEXT')
-      console.log(singleLineFields)
       setFields(singleLineFields)
     }
     setField()
@@ -21,12 +20,13 @@ export const FieldDropDown = () => {
 
   return (
     <>
-      <InputLabel id='drop-down-label'>出力フィールド</InputLabel>
+      <InputLabel id='field-dropdown-label'>出力フィールド</InputLabel>
       <Select
-        labelId='drop-down-label'
-        id='props-key-dropdown'
+        labelId='field-dropdown-label'
+        id='field-key-dropdown'
         value={value}
         label='出力フィールド'
+        style={{ minWidth: 145, width: '100%' }}
         onChange={e => {
           setValue(e.target.value)
         }}>

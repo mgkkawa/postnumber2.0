@@ -1,48 +1,40 @@
-// import React, { useEffect, useState } from 'react'
-// import { useForm } from 'react-hook-form'
-// import { UnpackNestedValue } from 'react-hook-form/dist/types'
+import { FormControl } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { getFields } from '../modules'
+import { FieldDropDown, PropsDropDown } from './components'
 
-// type Setting = {
-//   key: string
-//   field: string
-// }
-// export type FormInput = {
-//   zipcode: string
-//   settings: Setting[]
-// }
+export const FormTest = () => {
+  const [fields, setFields] = useState<GetField[]>([])
+  const [value, setValue] = useState('')
 
-// export const FormTest = () => {
-//   const { control, handleSubmit, getValues } = useForm<FormInput>()
-//   const [first, setfirst] = useState(second)
-//   useEffect(() => {
-//     first
+  useEffect(() => {
+    const setField = async () => {
+      const appId = kintone.app.getId()
+      if (!appId) return
+      const fields = await getFields(appId)
 
-//   }, [third])
-
-//   const printWithData = data => {
-//     console.log('data確認')
-
-//     const { zipcode, settings } = data
-//     console.log(`zipcode:${zipcode}`)
-//     console.log(`settings:${settings}`)
-//   }
-
-//   const printByGetValues = () => {
-//     console.log('getValues()確認')
-
-//     const { zipcode, settings } = getValues()
-//     console.log(`zipcode:${zipcode}`)
-//     console.log(`settings:${settings}`)
-//   }
-
-//   const onSubmit = data=> {
-//     // dataオブジェクトを確認
-//     printWithData(data)
-
-//     // getValuesで確認
-//     printByGetValues()
-//   }
-
-//   const Fields =
-//   return <div>FormTest</div>
-// }
+      const singleLineFields = fields.filter((field: { type: string }) => field.type === 'SINGLE_LINE_TEXT')
+      setFields(singleLineFields)
+    }
+    setField()
+  }, [])
+  return (
+    <>
+      <h1 style={{ fontSize: 22, fontWeight: 'bold' }}>郵便番号検索プラグイン 2.0</h1>
+      <p style={{ fontSize: 13, color: 'Gray' }}>
+        指定した郵便番号フィールドの値から郵便番号を取得・検索
+        <br />
+        郵便番号フィールドに入力される値に対してのチェックも実施する。
+      </p>
+      <br />
+      <FormControl style={{ marginLeft: 12 }}>
+        <label htmlFor=''></label>
+        <select name='field-title' id='field-title'>
+          {fields.map(field => {
+            return <option value={field.code}></option>
+          })}
+        </select>
+      </FormControl>
+    </>
+  )
+}
