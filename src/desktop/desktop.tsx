@@ -1,9 +1,9 @@
-import { getAddressObject, getConfig, numberExchange } from '../modules'
+import { getConfig } from '../common'
+import { getAddressObject, numberExchange } from '../modules'
 import { checkZipcodeField } from './checkZipcodeField'
-import { getZipcode } from './getZipcode'
 import { isZipcode } from './isZipcode'
 
-const config: ConfigProps = getConfig(kintone.$PLUGIN_ID)
+const config: PluginConfig = getConfig(kintone.$PLUGIN_ID)
 const { zipcode, settings } = config
 
 kintone.events.on('app.record.edit.show', async (event: any) => {
@@ -11,7 +11,7 @@ kintone.events.on('app.record.edit.show', async (event: any) => {
   const settingLoop = () => {
     for (let setting of settings) {
       const { field, key } = setting
-      if (!(key in response)) continue
+      if (!key) continue
       nullSet(record[field], response[key])
     }
   }
@@ -44,7 +44,7 @@ kintone.events.on(['app.record.create.change.' + zipcode, 'app.record.edit.chang
 
     for (let setting of settings) {
       const { field, key } = setting
-      if (!(key in response)) continue
+      if (!key) continue
       nullSet(record[field], response[key])
     }
     kintone.app.record.set({ record: record })
@@ -67,19 +67,7 @@ kintone.events.on(['app.record.create.change.' + zipcode, 'app.record.edit.chang
   if (isZipcode) setAddresses()
 })
 
-const settingLoop = (record: Record<string, any>, response: ResultAddress) => {
-  if (!settings) return
-  for (let setting of settings) {
-    const { field, key } = setting
-    if (!(key in response)) continue
-    nullSet(record[field], response[key])
-  }
-}
-
 const nullSet = (field: any, value: string = '') => {
-  // console.log(field)
-  // console.log(!field, !!field.value)
-  // console.log(value)
   if (!field || !!field.value) return
   field.value = value
 }
